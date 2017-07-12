@@ -59,7 +59,9 @@
 
 (def newSuspect (listOfSuspects (append data ["Van Hellsing" "0"])))
 
-(def appendv2 (into mapData (list {:name "a"  :id 2})))
+(def appendv2 (into mapData (list {:n2ame "Van Hellsing"  :glitter-index 2})))
+(def appendv1 (into mapData (list {:name "Van Hellsing"  :glitter-index 2})))
+
 ;;End Exercise 2
 
 ;;Start Exercise 3
@@ -71,17 +73,17 @@
 
 (defn validate
   [mok recoval]
-     (map
-        (fn [y]
-          (map
-           (fn [x]
-             (if (false? (contains? mok (first x)))
-               (conj x "not allowed keyword")
-               true
-               ))
-           y))
-        recoval))
+  (apply str "validate done"
+         (map
+             (fn[y]
+               (let [[a b] (keys y)]
+                 (if (true? (and (contains? mok a) (contains? mok b)))
+                   (str "")
+                   (str " not allowed keyword\n" y))))
+             recoval)))
+
 ;;End Exercise 3
+
 
 ;;Start Exercise 4
 ;;Write a function that will take your list of maps and convert it back to a CSV string.
@@ -89,17 +91,18 @@
 
 (defn convertToCSV
   [record]
-  (let [x record]
-    (spit "suspects.csv" x)))
+  (apply str (map
+              (fn [x]
+                (let [{:keys [name glitter-index]} x]
+                  (str name "," glitter-index "\n")))
+              record)))
 
 ;;End Exercise 4
-
-
-(validate mapofkeys appendv2)
 
 (defn -main
   [& args]
   (println "Exercise 1 list of suspects \n" suspectData)
   (println "Exercise 2 append new suspect to list \n" newSuspect)
-  (println "Exercise 3 validate list \n" (validate mapofkeys appendv2)))
+  (println "Exercise 3 validate list \n" (validate mapofkeys appendv2))
+  (println "Exercise 4 Convert back to csv string\n" (convertToCSV appendv1)))
 
