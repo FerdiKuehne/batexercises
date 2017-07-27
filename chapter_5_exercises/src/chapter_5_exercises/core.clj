@@ -38,6 +38,17 @@
 ;;5.Exercises
 ;;Implement update-in
 
+(defn add2
+  [x]
+  (+ x 2))
+
+
+(defn myfunc
+  [y x]
+  (+ (add2 y) (add2 x)))
+
+(myfunc 2 3)
+
 (defn -main
   [& args]
   (println "Chapter 5 Functional Programming!")
